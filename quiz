@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Valentine?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: system-ui, sans-serif;
+      background: linear-gradient(135deg, #ffdee9, #b5fffc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    button {
+      font-size: 18px;
+      padding: 12px 28px;
+      border-radius: 25px;
+      border: none;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    #yesBtn {
+      background-color: #ff4d6d;
+      color: white;
+    }
+
+    #noBtn {
+      background-color: #6c757d;
+      color: white;
+    }
+
+    .result {
+      display: none;
+      margin-top: 30px;
+      animation: pop 0.6s ease;
+    }
+
+    .meme {
+      font-size: 64px;
+      margin-top: 20px;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Will you be my Valentine? 💘</h1>
+
+    <div class="buttons" id="buttons">
+      <button id="yesBtn">Yes 💖</button>
+      <button id="noBtn">No 😅</button>
+    </div>
+
+    <div class="result" id="result">
+      <h2>Excellent choice 😌</h2>
+      <div class="meme">🌹💖🥰🌹</div>
+      <p>Outstanding decision. This will be taught in future textbooks 📚💖🧠</p>
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const result = document.getElementById("result");
+    const buttons = document.getElementById("buttons");
+
+    let isFloating = false;
+    let currentX = 0;
+    let currentY = 0;
+
+    function moveNoButton() {
+      const moveBy = 120; // distance per click
+
+      if (!isFloating) {
+        // Capture current position once
+        const rect = noBtn.getBoundingClientRect();
+        currentX = rect.left;
+        currentY = rect.top;
+
+        noBtn.style.position = "fixed";
+        noBtn.style.left = `${currentX}px`;
+        noBtn.style.top = `${currentY}px`;
+
+        isFloating = true;
+      }
+
+      // Random direction
+      const dx = (Math.random() - 0.5) * moveBy;
+      const dy = (Math.random() - 0.5) * moveBy;
+
+      currentX += dx;
+      currentY += dy;
+
+      // Clamp to viewport
+      const maxX = window.innerWidth - noBtn.offsetWidth - 10;
+      const maxY = window.innerHeight - noBtn.offsetHeight - 10;
+
+      currentX = Math.max(10, Math.min(currentX, maxX));
+      currentY = Math.max(10, Math.min(currentY, maxY));
+
+      noBtn.style.left = `${currentX}px`;
+      noBtn.style.top = `${currentY}px`;
+    }
+
+    noBtn.addEventListener("click", moveNoButton);
+
+    yesBtn.addEventListener("click", () => {
+      buttons.style.display = "none";
+      result.style.display = "block";
+    });
+  </script>
+</body>
+</html>
+
